@@ -3,7 +3,10 @@ pipeline {
   stages {
     stage('Compile') {
       steps {
-        sh 'dotnet build'
+        withDotNet() {
+          dotnetBuild()
+        }
+
       }
     }
 
