@@ -14,6 +14,6 @@ pipeline {
 
   }
   environment {
-    DOTNET_CLI_HOME = '/usr/bin/dotnet'
+    DOTNET_CLI_HOME = '/tmp/fuck'
   }
 }
