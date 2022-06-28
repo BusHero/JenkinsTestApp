@@ -12,6 +12,18 @@ pipeline {
       }
     }
 
+    stage('Clean') {
+      steps {
+        dotnetClean()
+      }
+    }
+
+    stage('') {
+      steps {
+        dotnetBuild()
+      }
+    }
+
   }
   environment {
     DOTNET_CLI_HOME = '/tmp'
