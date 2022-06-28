@@ -13,5 +13,11 @@ pipeline {
       }
     }
 
+    stage('Restore Packages') {
+      steps {
+        sh 'dotnet restore'
+      }
+    }
+
   }
 }
