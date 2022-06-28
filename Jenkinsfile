@@ -36,7 +36,7 @@ pipeline {
   }
   post {
     always {
-        archiveArtifacts artifacts: "/var/jenkins_home/workspace/JenkinsTestApp_master/JenkinsTestApp/bin/Debug/net6.0/publish/", fingerprint: true
+        archiveArtifacts artifacts: "JenkinsTestApp/bin/Debug/net6.0/publish/", fingerprint: true
     }
   }
 }
