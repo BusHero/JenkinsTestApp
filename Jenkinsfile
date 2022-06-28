@@ -3,8 +3,7 @@ pipeline {
   stages {
     stage('Compile') {
       steps {
-        echo 'Hello, World!'
-        pwd(tmp: true)
+        sh 'dotnet build'
       }
     }
 
