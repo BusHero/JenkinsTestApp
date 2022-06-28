@@ -13,4 +13,7 @@ pipeline {
     }
 
   }
+  environment {
+    DOTNET_CLI_HOME = '/usr/bin/dotnet'
+  }
 }
