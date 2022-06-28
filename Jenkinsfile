@@ -7,8 +7,19 @@ pipeline {
   }
   stages {
     stage('Restore packages') {
-      steps {
-        dotnetRestore()
+      parallel {
+        stage('Restore packages') {
+          steps {
+            dotnetRestore()
+          }
+        }
+
+        stage('') {
+          steps {
+            sh 'docker --help'
+          }
+        }
+
       }
     }
 
@@ -36,7 +47,8 @@ pipeline {
   }
   post {
     always {
-        archiveArtifacts artifacts: "JenkinsTestApp/bin/Debug/net6.0/publish/", fingerprint: true
+      archiveArtifacts(artifacts: 'JenkinsTestApp/bin/Debug/net6.0/publish/', fingerprint: true)
     }
+
   }
 }
