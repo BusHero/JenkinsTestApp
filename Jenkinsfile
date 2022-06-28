@@ -3,13 +3,15 @@ pipeline {
     docker {
       image 'mcr.microsoft.com/dotnet/sdk:6.0.301-1-alpine3.16-amd64'
     }
+
   }
   stages {
-    stage('Check dotnet installation') {
+    stage('Restore packages') {
       steps {
-        sh 'dotnet help'
+        dotnetRestore()
       }
     }
+
   }
   environment {
     DOTNET_CLI_HOME = '/tmp'
