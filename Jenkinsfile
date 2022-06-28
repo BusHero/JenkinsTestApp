@@ -3,7 +3,6 @@ pipeline {
     docker {
       image 'mcr.microsoft.com/dotnet/sdk:6.0.301-1-alpine3.16-amd64'
     }
-
   }
   stages {
     stage('Check dotnet installation') {
@@ -11,9 +10,8 @@ pipeline {
         sh 'dotnet help'
       }
     }
-
   }
   environment {
-    DOTNET_CLI_HOME = '/tmp/fuck'
+    DOTNET_CLI_HOME = '/tmp'
   }
 }
