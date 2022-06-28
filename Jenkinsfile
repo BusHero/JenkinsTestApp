@@ -1,22 +1,11 @@
 pipeline {
   agent any
+
   stages {
-    stage('build') {
-      parallel {
-        stage('build') {
-          steps {
-            echo 'build stage'
-          }
+    stage('Clean Workspace') {
+        steps {
+            cleanWs()
         }
-
-        stage('Some other name') {
-          steps {
-            echo 'parallel'
-          }
-        }
-
-      }
     }
-
   }
 }
