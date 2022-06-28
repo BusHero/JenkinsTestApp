@@ -3,7 +3,7 @@ pipeline {
   stages {
     stage('Compile') {
       steps {
-        withDotNet() {
+        withDotNet(sdk: '6.0') {
           dotnetBuild()
         }
 
