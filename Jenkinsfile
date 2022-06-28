@@ -18,9 +18,15 @@ pipeline {
       }
     }
 
-    stage('') {
+    stage('Build') {
       steps {
         dotnetBuild()
+      }
+    }
+
+    stage('Publish') {
+      steps {
+        dotnetPublish()
       }
     }
 
