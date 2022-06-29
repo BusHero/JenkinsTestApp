@@ -14,7 +14,8 @@ pipeline {
           }
         }
 
-        stage('') {
+        stage('Check docker ') {
+          agent any
           steps {
             sh 'docker --help'
           }
@@ -39,9 +40,6 @@ pipeline {
       steps {
         dotnetPublish()
       }
-    }
-
-    stage('Build Docker Container') {
     }
 
   }
