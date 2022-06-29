@@ -29,10 +29,6 @@ pipeline {
         dotnetPublish()
       }
     }
-
-    stage('Build Docker Container') {
-    }
-
   }
   environment {
     DOTNET_CLI_HOME = '/tmp'
