@@ -22,9 +22,4 @@ pipeline {
   environment {
     DOTNET_CLI_HOME = '/tmp'
   }
-  post {
-    always {
-      archiveArtifacts(artifacts: 'JenkinsTestApp/bin/Debug/net6.0/publish/', fingerprint: true)
-    }
-  }
 }
