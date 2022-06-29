@@ -29,10 +29,9 @@ pipeline {
       }
     }
     stage('Build Docker Container') {
-        agent any {
-            steps {
-                sh docker --help
-            }
+        agent any
+        steps {
+            sh docker --help
         }
     }
   }
