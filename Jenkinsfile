@@ -28,14 +28,6 @@ pipeline {
         dotnetPublish()
       }
     }
-    stage('Build Docker Container') {
-        agent any
-        steps {
-            step {
-                sh docker --help
-            }
-        }
-    }
   }
   environment {
     DOTNET_CLI_HOME = '/tmp'
