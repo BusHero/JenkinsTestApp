@@ -1,0 +1,21 @@
+REPOSITORY                                           TAG                          IMAGE ID       CREATED              SIZE
+<none>                                               <none>                       f3d128c019b0   About a minute ago   216MB
+counter-image                                        latest                       a8b1adcc6a15   56 minutes ago       216MB
+myjenkins-blueocean                                  2.346.1-1                    f4be022c3f47   26 hours ago         778MB
+homesweethomeapp                                     latest                       670e3248e25c   4 days ago           266MB
+localhost:5000/homesweethomeapp                      latest                       670e3248e25c   4 days ago           266MB
+localhost:6000/homesweethomeapp                      latest                       670e3248e25c   4 days ago           266MB
+homesweethomeapp                                     dev                          82d01bcea91f   4 days ago           208MB
+jenkinstestapp                                       dev                          51ac03f1f48e   4 days ago           208MB
+<none>                                               <none>                       5d43c1f88df8   4 days ago           208MB
+vsc-system-config-96670405ed47c857172402555c0044d8   latest                       becf889bab46   5 days ago           470MB
+mcr.microsoft.com/dotnet/aspnet                      6.0                          a7b911013ddb   5 days ago           208MB
+jenkins/jenkins                                      alpine                       b7514c8db892   6 days ago           260MB
+mcr.microsoft.com/dotnet/sdk                         6.0.301-1-alpine3.16-amd64   a5a6659fdac7   12 days ago          598MB
+cloudcustomersapi                                    dev                          a41e3805df3b   2 weeks ago          208MB
+vsc-blazorapp-dce973db806310fd3433d5ccb5e69113       latest                       3a7afd2ba217   2 weeks ago          1.19GB
+vsc-robot-dd8aa8eca2a4eeee719ab978df06cb35           latest                       a19b645ca718   2 weeks ago          255MB
+docker                                               dind                         5dbe252bd9af   2 weeks ago          312MB
+mcr.microsoft.com/dotnet/aspnet                      5.0                          29de1b9e96c0   4 weeks ago          205MB
+registry                                             2                            773dbf02e42e   4 weeks ago          24.1MB
+vsc-tutorial-38507929c4004fb2522906be322d62d5        latest                       30c13a772b13   2 months ago         1.11GB
