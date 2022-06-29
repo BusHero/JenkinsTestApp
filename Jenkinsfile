@@ -1,52 +1,22 @@
 pipeline {
-  agent {
-    docker {
-      image 'mcr.microsoft.com/dotnet/sdk:6.0.301-1-alpine3.16-amd64'
-    }
-
-  }
   stages {
     stage('Restore packages') {
-      parallel {
-        stage('Restore packages') {
-          steps {
-            dotnetRestore()
-          }
+      agent {
+        docker {
+          image 'mcr.microsoft.com/dotnet/sdk:6.0.301-1-alpine3.16-amd64'
         }
-
-        stage('check docker') {
-          agent {
-            node {
-              label 'foo'
-            }
-
-          }
-          steps {
-            sh 'docker --help'
-          }
-        }
-
       }
-    }
-
-    stage('Clean') {
       steps {
-        dotnetClean()
+        dotnetRestore()
       }
     }
 
-    stage('Build') {
+    stage('check docker') {
+      agent any
       steps {
-        dotnetBuild()
+        sh 'docker --help'
       }
     }
-
-    stage('Publish') {
-      steps {
-        dotnetPublish()
-      }
-    }
-
   }
   environment {
     DOTNET_CLI_HOME = '/tmp'
@@ -55,6 +25,5 @@ pipeline {
     always {
       archiveArtifacts(artifacts: 'JenkinsTestApp/bin/Debug/net6.0/publish/', fingerprint: true)
     }
-
   }
 }
