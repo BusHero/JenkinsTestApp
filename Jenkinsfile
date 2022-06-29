@@ -7,8 +7,20 @@ pipeline {
   }
   stages {
     stage('Restore packages') {
-      steps {
-        dotnetRestore()
+      parallel {
+        stage('Restore packages') {
+          steps {
+            dotnetRestore()
+          }
+        }
+
+        stage('check docker') {
+          agent any
+          steps {
+            sh 'docker --help'
+          }
+        }
+
       }
     }
 
@@ -29,13 +41,15 @@ pipeline {
         dotnetPublish()
       }
     }
+
   }
   environment {
     DOTNET_CLI_HOME = '/tmp'
   }
   post {
     always {
-        archiveArtifacts artifacts: "JenkinsTestApp/bin/Debug/net6.0/publish/", fingerprint: true
+      archiveArtifacts(artifacts: 'JenkinsTestApp/bin/Debug/net6.0/publish/', fingerprint: true)
     }
+
   }
 }
