@@ -15,7 +15,12 @@ pipeline {
         }
 
         stage('check docker') {
-          agent any
+          agent {
+            node {
+              label 'foo'
+            }
+
+          }
           steps {
             sh 'docker --help'
           }
