@@ -37,7 +37,7 @@ pipeline {
     stage('check docker') {
       agent any
       steps {
-        sh 'docker --help'
+        sh 'docker build .\JenkinsTestApp'
       }
     }
   }
