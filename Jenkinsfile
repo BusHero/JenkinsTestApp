@@ -28,6 +28,8 @@ pipeline {
         // sh 'dotnet publish'
         // sh 'docker build -t jenkinstestapp:latest ./JenkinsTestApp/'
         // sh 'docker push registry:5000/jenkinstestapp:latest'
+        sh 'docker pull ubuntu'
+        sh 'docker tag ubuntu registry:5000/ubuntu'
         sh 'docker push registry:5000/ubuntu'
       }
     }
