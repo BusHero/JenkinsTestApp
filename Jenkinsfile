@@ -37,8 +37,7 @@ pipeline {
     stage('build image') {
       agent any
       steps {
-        sh 'pwd'
-        sh 'docker build ./JenkinsTestApp'
+        sh 'docker build .'
       }
     }
   }
