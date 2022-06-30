@@ -1,5 +1,5 @@
 pipeline {
-  agent none
+  agent any
   stages {
     // stage('Restore packages') {
     //   agent {
@@ -24,23 +24,17 @@ pipeline {
     // }
 
     stage('Publish') {
-      agent {
-        docker {
-          image 'mcr.microsoft.com/dotnet/sdk:6.0.301-1-alpine3.16-amd64'
-          args '-v $Home/publish:$Home/publish'
-        }
-      }
       steps {
-        sh 'dotnet publish -o ./publish'
+        sh 'dotnet publish'
       }
     }
 
-    stage('build image') {
-      agent any
-      steps {
-        sh 'ls -la'
-      }
-    }
+    // stage('build image') {
+    //   agent any
+    //   steps {
+    //     sh 'ls -la'
+    //   }
+    // }
   }
   environment {
     DOTNET_CLI_HOME = '/tmp'
