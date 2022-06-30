@@ -1,7 +1,7 @@
 pipeline {
   agent any
   stages {
-    stage('Publish') {
+    stage('Commit') {
       steps {
         sh 'dotnet restore'
         sh 'dotnet build -c Release'
