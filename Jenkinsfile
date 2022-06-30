@@ -25,9 +25,10 @@ pipeline {
 
     stage('Publish') {
       steps {
-        sh 'dotnet publish'
-        sh 'docker build -t jenkinstestapp:latest ./JenkinsTestApp/'
-        sh 'docker push registry:5000/jenkinstestapp:latest'
+        // sh 'dotnet publish'
+        // sh 'docker build -t jenkinstestapp:latest ./JenkinsTestApp/'
+        // sh 'docker push registry:5000/jenkinstestapp:latest'
+        sh 'docker push registry:5000/ubuntu'
       }
     }
 
