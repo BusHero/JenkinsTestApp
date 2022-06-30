@@ -26,7 +26,7 @@ pipeline {
     stage('Publish') {
       steps {
         sh 'dotnet publish'
-        sh 'ls JenkinsTestApp'
+        sh 'docker build .'
       }
     }
 
