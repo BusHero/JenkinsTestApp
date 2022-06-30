@@ -26,14 +26,14 @@ pipeline {
     stage('Publish') {
       steps {
         sh 'dotnet publish'
-      }
-    }
-
-    stage('build image') {
-      steps {
         sh 'ls JenkinsTestApp'
       }
     }
+
+    // stage('build image') {
+    //   steps {
+    //   }
+    // }
   }
   environment {
     DOTNET_CLI_HOME = '/tmp'
