@@ -25,19 +25,12 @@ pipeline {
 
     stage('Publish') {
       steps {
-        // sh 'dotnet publish'
-        // sh 'docker build -t jenkinstestapp:latest ./JenkinsTestApp/'
-        // sh 'docker push registry:5000/jenkinstestapp:latest'
-        sh 'docker pull ubuntu'
-        sh 'docker tag ubuntu 172.19.0.3:5000/ubuntu'
-        sh 'docker push 172.19.0.3:5000/ubuntu'
+        sh 'dotnet restore'
+        sh 'dotnet build -c Release'
+        sh 'dotnet publish -c Release'
+        sh 'docker build -t jenkinstestapp:latest ./JenkinsTestApp/'
       }
     }
-
-    // stage('build image') {
-    //   steps {
-    //   }
-    // }
   }
   environment {
     DOTNET_CLI_HOME = '/tmp'
