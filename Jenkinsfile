@@ -27,7 +27,7 @@ pipeline {
       agent {
         docker {
           image 'mcr.microsoft.com/dotnet/sdk:6.0.301-1-alpine3.16-amd64'
-          args '-v /var/jenkins_home/workspace/JenkinsTestApp_master/JenkinsTestApp/bin/Debug/net6.0/publish/:/var/jenkins_home/workspace/JenkinsTestApp_master/JenkinsTestApp/bin/Debug/net6.0/publish/'
+          args '-v $Home/publish:$Home/JenkinsTestApp/bin/Debug/net6.0/publish/'
         }
       }
       steps {
@@ -35,13 +35,13 @@ pipeline {
       }
     }
 
-    stage('build image') {
-      agent any
-      steps {
-        sh 'ls /var/jenkins_home/workspace/JenkinsTestApp_master/JenkinsTestApp/bin/Debug/net6.0/publish/'
-        // sh 'docker build .'
-      }
-    }
+    // stage('build image') {
+    //   agent any
+    //   steps {
+    //     sh 'ls /var/jenkins_home/workspace/JenkinsTestApp_master/JenkinsTestApp/bin/Debug/net6.0/publish/'
+    //     // sh 'docker build .'
+    //   }
+    // }
   }
   environment {
     DOTNET_CLI_HOME = '/tmp'
