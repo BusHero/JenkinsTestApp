@@ -27,6 +27,7 @@ pipeline {
       steps {
         sh 'dotnet publish'
         sh 'docker build -t jenkinstestapp ./JenkinsTestApp/'
+        sh 'docker push localhost:5000/jenkinstestapp'
       }
     }
 
