@@ -6,7 +6,7 @@ pipeline {
         sh 'dotnet restore'
         sh 'dotnet build -c Release'
         sh 'dotnet publish -c Release'
-        sh 'docker build -t jenkinstestapp:latest ./JenkinsTestApp/'
+        sh 'docker build -t jenkinstestapp:${currentBuild.number} ./JenkinsTestApp/'
       }
     }
   }
