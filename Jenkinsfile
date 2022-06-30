@@ -37,7 +37,7 @@ pipeline {
     stage('build image') {
       agent any
       steps {
-        sh 'ls ./JenkinsTestApp/bin/Debug/net6.0/publish/'
+        sh 'ls /var/jenkins_home/workspace/JenkinsTestApp_master/JenkinsTestApp/bin/Debug/net6.0/publish/'
         // sh 'docker build .'
       }
     }
