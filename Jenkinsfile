@@ -30,7 +30,6 @@ pipeline {
     }
 
     stage('build image') {
-      agent any
       steps {
         sh 'ls JenkinsTestApp'
       }
