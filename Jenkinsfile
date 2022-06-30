@@ -23,14 +23,14 @@ pipeline {
       }
     }
 
-    stage('Pack') {
+    stage('Publish') {
       agent {
         docker {
           image 'mcr.microsoft.com/dotnet/sdk:6.0.301-1-alpine3.16-amd64'
         }
       }
       steps {
-        dotnetPack()
+        dotnetPublish()
       }
     }
 
