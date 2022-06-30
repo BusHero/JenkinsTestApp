@@ -29,12 +29,12 @@ pipeline {
       }
     }
 
-    // stage('build image') {
-    //   agent any
-    //   steps {
-    //     sh 'ls -la'
-    //   }
-    // }
+    stage('build image') {
+      agent any
+      steps {
+        sh 'docker build .'
+      }
+    }
   }
   environment {
     DOTNET_CLI_HOME = '/tmp'
