@@ -32,7 +32,7 @@ pipeline {
     stage('build image') {
       agent any
       steps {
-        sh 'docker build .'
+        sh 'ls JenkinsTestApp'
       }
     }
   }
