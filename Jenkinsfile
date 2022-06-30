@@ -27,7 +27,7 @@ pipeline {
       agent {
         docker {
           image 'mcr.microsoft.com/dotnet/sdk:6.0.301-1-alpine3.16-amd64'
-          args '-v $Home/publish:$Home/publish'
+          // args '-v $Home/publish:$Home/publish'
         }
       }
       steps {
