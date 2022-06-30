@@ -31,7 +31,7 @@ pipeline {
         }
       }
       steps {
-        dotnetPublish()
+        sh 'dotnet publish -o ./publish'
       }
     }
 
