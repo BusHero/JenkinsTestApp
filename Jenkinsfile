@@ -29,8 +29,8 @@ pipeline {
         // sh 'docker build -t jenkinstestapp:latest ./JenkinsTestApp/'
         // sh 'docker push registry:5000/jenkinstestapp:latest'
         sh 'docker pull ubuntu'
-        sh 'docker tag ubuntu registry:5000/ubuntu'
-        sh 'docker push registry:5000/ubuntu'
+        sh 'docker tag ubuntu 172.19.0.3:5000/ubuntu'
+        sh 'docker push 172.19.0.3:5000/ubuntu'
       }
     }
 
