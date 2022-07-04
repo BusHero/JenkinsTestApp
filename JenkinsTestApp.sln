@@ -7,6 +7,16 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JenkinsTestApp", "JenkinsTe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JenkinsTestApp.Tests.Unit", "JenkinsTestApp.Tests.Unit\JenkinsTestApp.Tests.Unit.csproj", "{E62FA05C-2100-4297-9ABD-C84D13B8B303}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Garbage", "Garbage", "{EEA38A76-8F3D-4165-9C82-6B77B3E39243}"
+	ProjectSection(SolutionItems) = preProject
+		.gitattributes = .gitattributes
+		.gitignore = .gitignore
+		Build-Jenkins.ps1 = Build-Jenkins.ps1
+		Jenkinsfile = Jenkinsfile
+		launch.ps1 = launch.ps1
+		README.md = README.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
