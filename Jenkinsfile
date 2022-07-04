@@ -5,6 +5,7 @@ pipeline {
       steps {
         sh 'dotnet restore'
         sh 'dotnet build -c Release'
+        sh 'dotnet test -c Release'
         sh 'dotnet publish -c Release'
         sh "docker build -t jenkinstestapp:$BUILD_NUMBER ./JenkinsTestApp/"
       }
