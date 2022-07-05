@@ -14,7 +14,7 @@ pipeline {
     stage('Check docker image') {
         steps {
             sh """
-               docker run --rm --detach --publish 8081:80 --network jenkins --network-alias jenkinstestapp --name "jenkinstestapp$BUILD_NUMBER" ghcr.io/bushero/jenkinstestapp:131
+               docker run --rm --detach --publish 8081:80 --network jenkins --network-alias jenkinstestapp --name "jenkinstestapp$BUILD_NUMBER" "ghcr.io/bushero/jenkinstestapp:$BUILD_NUMBER"
                sleep 5
                curl -Is jenkinstestapp:80 --head 
                docker stop "jenkinstestapp$BUILD_NUMBER"
