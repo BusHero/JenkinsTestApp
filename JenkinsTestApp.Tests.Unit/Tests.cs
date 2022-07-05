@@ -11,6 +11,6 @@ public class Tests
     [Fact]
     public void Test2()
     {
-        true.Should().BeTrue();
+        true.Should().BeFalse();
     }
 }
