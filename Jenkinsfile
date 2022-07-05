@@ -13,7 +13,7 @@ pipeline {
     stage ('Push image') {
         steps {
             script {
-                docker.withRegistry('ghcr.io/bushero', 'test') {
+                docker.withRegistry('https://ghcr.io/bushero', 'test') {
                     app.push("${env.BUILD_NUMBER}")
                     app.push("latest")
                 }
