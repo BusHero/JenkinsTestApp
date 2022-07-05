@@ -10,6 +10,11 @@ pipeline {
         sh "docker build --quiet --tag jenkinstestapp:$BUILD_NUMBER ./JenkinsTestApp/"
       }
     }
+    stage('Sanity check') {
+        steps {
+            input "Does the staging environment look ok?"
+        }
+    }
   }
   environment {
     DOTNET_CLI_HOME = '/tmp'
