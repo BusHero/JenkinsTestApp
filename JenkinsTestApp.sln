@@ -17,12 +17,16 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Garbage", "Garbage", "{EEA3
 		README.md = README.md
 	EndProjectSection
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "_build", "build\_build.csproj", "{982CF7C7-089C-4FD6-B7F1-0F165D63E7E2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{982CF7C7-089C-4FD6-B7F1-0F165D63E7E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{982CF7C7-089C-4FD6-B7F1-0F165D63E7E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6E7A57C8-2D5A-4EDA-B06C-2DC2320D5B39}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6E7A57C8-2D5A-4EDA-B06C-2DC2320D5B39}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6E7A57C8-2D5A-4EDA-B06C-2DC2320D5B39}.Release|Any CPU.ActiveCfg = Release|Any CPU
