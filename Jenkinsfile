@@ -13,10 +13,10 @@ pipeline {
     stage('Check docker image') {
         steps {
             sh """
-               docker run --rm --detach --publish 8081:80 --name jenkinstestapp jenkinstestapp:$BUILD_NUMBER
+               docker run --rm --detach --publish 8081:80 --name "jenkinstestapp$BUILD_NUMBER" jenkinstestapp:$BUILD_NUMBER
                sleep 5
                curl -Is localhost:8081 --head --fail --silent
-               docker stop jenkinstestapp
+               docker stop "jenkinstestapp$BUILD_NUMBER"
                """
         }
     }
