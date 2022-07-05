@@ -15,7 +15,7 @@ pipeline {
             sh """
                docker run --rm --detach --publish 8081:80 --name "jenkinstestapp$BUILD_NUMBER" jenkinstestapp:$BUILD_NUMBER
                sleep 5
-               curl -Is localhost:8081 --head --fail --silent
+               curl -Is localhost:8081 --head 
                docker stop "jenkinstestapp$BUILD_NUMBER"
                """
         }
