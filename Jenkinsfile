@@ -14,6 +14,7 @@ pipeline {
         docker.withRegistry('ghcr.io/bushero', 'test') {
             app.push("${env.BUILD_NUMBER}")
             app.push("latest")
+        }
     }
     stage('Check docker image') {
         steps {
