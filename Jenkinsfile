@@ -6,16 +6,16 @@ pipeline {
         sh 'dotnet restore --verbosity Quiet'
         sh 'dotnet build --verbosity Quiet --configuration Release --no-restore --nologo'
         sh 'dotnet test --configuration Release --nologo --no-restore --verbosity Quiet --logger trx'
-        sh 'dotnet publish --configuration Release --verbosity Quiet --no-restore'
+        sh 'dotnet publish --configuration Release --nologo --verbosity Quiet --no-restore'
         sh "docker build --quiet --tag jenkinstestapp:$BUILD_NUMBER ./JenkinsTestApp/"
       }
     }
     stage('Check docker image') {
         steps {
             sh """
-               docker run --rm --detach --publish 8081:80 --name "jenkinstestapp$BUILD_NUMBER" jenkinstestapp:$BUILD_NUMBER
+               docker run --rm --detach --publish 8081:80 --network jenkins --network-alias jenkinstestapp --name "jenkinstestapp$BUILD_NUMBER" jenkinstestapp:$BUILD_NUMBER
                sleep 5
-               curl -Is localhost:8081 --head 
+               curl -Is jenkinstestapp:80 --head 
                docker stop "jenkinstestapp$BUILD_NUMBER"
                """
         }
