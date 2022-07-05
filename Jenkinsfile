@@ -7,7 +7,9 @@ pipeline {
         sh 'dotnet build --verbosity Quiet --configuration Release --no-restore --nologo'
         sh 'dotnet test --configuration Release --nologo --no-restore --verbosity Quiet --logger trx'
         sh 'dotnet publish --configuration Release --nologo --verbosity Quiet --no-restore'
-        sh "docker build --quiet --tag jenkinstestapp ./JenkinsTestApp/"
+        script {
+            app = docker.build('jenkinstestapp')
+        }
       }
     }
     stage ('Push image') {
