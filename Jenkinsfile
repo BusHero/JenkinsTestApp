@@ -10,9 +10,13 @@ pipeline {
         sh "docker build --quiet --tag jenkinstestapp:$BUILD_NUMBER ./JenkinsTestApp/"
       }
     }
-    stage('Sanity check') {
+    stage('Check docker image') {
         steps {
-            input "Does the staging environment look ok?"
+            sh """
+               docker run --rm --detach --publish 8081:80 --name jenkinstestapp jenkinstestapp:$BUILD_NUMBER
+               curl -Is localhost:8081 --head --fail --silent
+               docker stop jenkinstestapp
+               """
         }
     }
   }
