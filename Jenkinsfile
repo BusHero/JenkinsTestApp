@@ -3,12 +3,14 @@ pipeline {
   stages {
     stage('Commit') {
       steps {
-        sh 'dotnet restore'
-        sh 'dotnet build -c Release'
+        sh 'dotnet restore --verbosoity Quiet'
+        sh 'dotnet build --configuration Release --no-restore --nologo'
         sh 'dotnet test --configuration Release --nologo --no-restore --verbosity Quiet --logger trx'
+        
         mstest testResultsFile:"**/*.trx", keepLongStdio: true
-        sh 'dotnet publish -c Release'
-        sh "docker build -t jenkinstestapp:$BUILD_NUMBER ./JenkinsTestApp/"
+        
+        sh 'dotnet publish --configuration Release --verbosity Quit --no-restore'
+        sh "docker build --quiet --tag jenkinstestapp:$BUILD_NUMBER ./JenkinsTestApp/"
       }
     }
   }
