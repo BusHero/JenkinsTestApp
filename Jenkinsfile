@@ -14,6 +14,7 @@ pipeline {
         steps {
             sh """
                docker run --rm --detach --publish 8081:80 --name jenkinstestapp jenkinstestapp:$BUILD_NUMBER
+               sleep 5
                curl -Is localhost:8081 --head --fail --silent
                docker stop jenkinstestapp
                """
