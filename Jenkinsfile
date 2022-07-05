@@ -9,6 +9,7 @@ pipeline {
         sh 'dotnet publish --configuration Release --nologo --verbosity Quiet --no-restore'
         sh "docker build --quiet --tag jenkinstestapp:$BUILD_NUMBER ./JenkinsTestApp/"
         sh "docker tag jenkinstestapp:$BUILD_NUMBER ghcr.io/bushero/jenkinstestapp:$BUILD_NUMBER"
+        sh "docker push ghcr.io/bushero/jenkinstestapp:$BUILD_NUMBER"
       }
     }
     stage('Check docker image') {
