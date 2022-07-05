@@ -8,7 +8,7 @@ pipeline {
         sh 'dotnet test --configuration Release --nologo --no-restore --verbosity Quiet --logger trx'
         sh 'dotnet publish --configuration Release --nologo --verbosity Quiet --no-restore'
         script {
-            app = docker.build('jenkinstestapp')
+            app = docker.build('jenkinstestapp', './JenkinsTestApp')
         }
       }
     }
