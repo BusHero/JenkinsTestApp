@@ -9,7 +9,7 @@ pipeline {
         
         mstest testResultsFile:"**/*.trx", keepLongStdio: true
         
-        sh 'dotnet publish --configuration Release --verbosity Quit --no-restore'
+        sh 'dotnet publish --configuration Release --verbosity Quiet --no-restore'
         sh "docker build --quiet --tag jenkinstestapp:$BUILD_NUMBER ./JenkinsTestApp/"
       }
     }
