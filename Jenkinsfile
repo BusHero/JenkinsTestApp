@@ -30,15 +30,15 @@ pipeline {
                             sh 'sleep 5'
                             sh 'curl -Is jenkinstestapp:80 --head' 
                         }
-                    }
-                    post {
-                        always {
-                            sh '''
-                                if docker ps --format "{{.Names}}" | grep -q "jenkinstestapp_$BUILD_NUMBER$"
-                                then
-                                    docker stop "jenkinstestapp_$BUILD_NUMBER"
-                                fi
-                            '''
+                        post {
+                            always {
+                                sh '''
+                                    if docker ps --format "{{.Names}}" | grep -q "jenkinstestapp_$BUILD_NUMBER$"
+                                    then
+                                        docker stop "jenkinstestapp_$BUILD_NUMBER"
+                                    fi
+                                '''
+                            }
                         }
                     }
                 }
