@@ -7,16 +7,19 @@ pipeline {
         sh 'dotnet build --verbosity Quiet --configuration Release --no-restore --nologo'
         sh 'dotnet test --configuration Release --nologo --no-restore --verbosity Quiet --logger trx'
         sh 'dotnet publish --configuration Release --nologo --verbosity Quiet --no-restore'
-        script {
-            app = docker.build("jenkinstestapp:${env.BUILD_NUMBER}", './JenkinsTestApp')
-        }
+        sh "docker build --quiet --tag jenkinstestapp ./JenkinsTestApp/"
       }
     }
     stage ('Push image') {
+        environment {
+          REGISTRY_KEY = credentials('test')
+        }
         steps {
+            sh docker 
             script {
                 docker.withRegistry('https://ghcr.io/bushero', 'test') {
-                    app.push("jenkinstestapp:${env.BUILD_NUMBER}")
+                    app.push("${env.BUILD_NUMBER}")
+                    app.push("latest")
                 }
             }
         }
