@@ -27,6 +27,7 @@ pipeline {
                     stage ('Run smoke tests') {
                         steps {
                             sh 'docker run --rm --detach --publish 8081:80 --network jenkins --network-alias jenkinstestapp --name "jenkinstestapp_$BUILD_NUMBER" "ghcr.io/bushero/jenkinstestapp:$BUILD_NUMBER"'
+                            sh 'sleep 5'
                             sh 'curl -Is jenkinstestapp:80 --head' 
                             sh 'docker stop "jenkinstestapp_$BUILD_NUMBER"'
                         }
@@ -45,6 +46,7 @@ pipeline {
                     stage ('Run smoke tests') {
                         steps {
                             sh 'docker run --rm --detach --publish 8082:80 --network jenkins --network-alias jenkinstestapp_latest --name "jenkinstestapp_latest" "ghcr.io/bushero/jenkinstestapp:latest"'
+                            sh 'sleep 5'
                             sh 'curl -Is jenkinstestapp_latest:80 --head' 
                             sh 'docker stop "jenkinstestapp_latest"'
                         }
