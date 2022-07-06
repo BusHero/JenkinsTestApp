@@ -29,11 +29,7 @@ pipeline {
                             sh 'docker run --rm --detach --publish 8081:80 --network jenkins --network-alias jenkinstestapp --name "jenkinstestapp_$BUILD_NUMBER" "ghcr.io/bushero/jenkinstestapp:$BUILD_NUMBER"'
                             sh 'sleep 5'
                             sh 'curl -Is jenkinstestapp:80 --head' 
-                        }
-                        post {
-                            always {
-                                sh 'docker stop "jenkinstestapp_$BUILD_NUMBER"'
-                            }
+                            sh 'docker stop "jenkinstestapp_$BUILD_NUMBER"'
                         }
                     }
                 }
@@ -56,10 +52,10 @@ pipeline {
                         post {
                             always {
                                 sh """
-                                if docker ps --format "{{.Names}}" | grep -q "jenkinstestapp_latest$"
-                                then
-                                    docker stop jenkinstestapp_latest
-                                fi
+                                    if docker ps --format "{{.Names}}" | grep -q "jenkinstestapp_latest$"
+                                    then
+                                        docker stop jenkinstestapp_latest
+                                    fi
                                 """
                             }
                         }
