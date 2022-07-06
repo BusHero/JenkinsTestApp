@@ -46,7 +46,6 @@ pipeline {
                     stage ('Run smoke tests') {
                         steps {
                             sh 'docker run --rm --detach --publish 8082:80 --network jenkins --network-alias jenkinstestapp_latest --name "jenkinstestapp_latest" "ghcr.io/bushero/jenkinstestapp:latest"'
-                            sh 'sleep 5'
                             sh 'curl -Is jenkinstestapp_latest:80 --head' 
                         }
                         post {
