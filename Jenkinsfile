@@ -16,18 +16,20 @@ pipeline {
         }
         parallel {
             stage('Push tagged image') {
-                stage('Push') {
-                    sh 'echo $REGISTRY_KEY | docker login ghcr.io -u BusHero --password-stdin'
-                    sh 'docker tag jenkinstestapp ghcr.io/bushero/jenkinstestapp:$BUILD_NUMBER'
-                    sh 'docker push ghcr.io/bushero/jenkinstestapp:$BUILD_NUMBER'
-                }
-                stage ('test') {
-                    sh """
-                       docker run --rm --detach --publish 8081:80 --network jenkins --network-alias jenkinstestapp --name "jenkinstestapp_$BUILD_NUMBER" "ghcr.io/bushero/jenkinstestapp:$BUILD_NUMBER"
-                       sleep 5
-                       curl -Is jenkinstestapp:80 --head 
-                       docker stop "jenkinstestapp_$BUILD_NUMBER"
-                       """
+                stages {
+                    stage('Push') {
+                        sh 'echo $REGISTRY_KEY | docker login ghcr.io -u BusHero --password-stdin'
+                        sh 'docker tag jenkinstestapp ghcr.io/bushero/jenkinstestapp:$BUILD_NUMBER'
+                        sh 'docker push ghcr.io/bushero/jenkinstestapp:$BUILD_NUMBER'
+                    }
+                    stage ('test') {
+                        sh """
+                           docker run --rm --detach --publish 8081:80 --network jenkins --network-alias jenkinstestapp --name "jenkinstestapp_$BUILD_NUMBER" "ghcr.io/bushero/jenkinstestapp:$BUILD_NUMBER"
+                           sleep 5
+                           curl -Is jenkinstestapp:80 --head 
+                           docker stop "jenkinstestapp_$BUILD_NUMBER"
+                           """
+                    }
                 }
             }
             stage('Push latest image') {
