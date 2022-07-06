@@ -12,7 +12,7 @@ pipeline {
     }
     stage ('Push image') {
         environment {
-          REGISTRY_KEY = credentials('test')
+          REGISTRY_KEY = credentials('GitHub_Registry_Key')
         }
         steps {
             script {
