@@ -51,12 +51,12 @@ pipeline {
                         }
                         post {
                             always {
-                                sh """
+                                sh '''
                                     if docker ps --format "{{.Names}}" | grep -q "jenkinstestapp_latest$"
                                     then
                                         docker stop jenkinstestapp_latest
                                     fi
-                                """
+                                '''
                             }
                         }
                     }
