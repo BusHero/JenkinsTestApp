@@ -24,7 +24,7 @@ pipeline {
                             sh 'docker push ghcr.io/bushero/jenkinstestapp:$BUILD_NUMBER'
                         }
                     }
-                    stage ('test') {
+                    stage ('Run smoke tests') {
                         steps {
                             sh 'docker run --rm --detach --publish 8081:80 --network jenkins --network-alias jenkinstestapp --name "jenkinstestapp_$BUILD_NUMBER" "ghcr.io/bushero/jenkinstestapp:$BUILD_NUMBER"'
                             sh 'sleep 5'
@@ -35,17 +35,23 @@ pipeline {
                 }
             }
             stage('Push latest image') {
-                steps {
-                    sh 'echo $REGISTRY_KEY | docker login ghcr.io -u BusHero --password-stdin'
-                    sh 'docker tag jenkinstestapp ghcr.io/bushero/jenkinstestapp:latest'
-                    sh 'docker push ghcr.io/bushero/jenkinstestapp:latest'
-                    sh """
-                       docker run --rm --detach --publish 8082:80 --network jenkins --network-alias jenkinstestapp_latest --name "jenkinstestapp_latest" "ghcr.io/bushero/jenkinstestapp:latest"
-                       sleep 5
-                       curl -Is jenkinstestapp_latest:80 --head 
-                       docker stop "jenkinstestapp_latest"
-                       """
-                }            
+                stages {
+                    stage('Push') {
+                        steps {
+                            sh 'echo $REGISTRY_KEY | docker login ghcr.io -u BusHero --password-stdin'
+                            sh 'docker tag jenkinstestapp ghcr.io/bushero/jenkinstestapp:latest'
+                            sh 'docker push ghcr.io/bushero/jenkinstestapp:latest'
+                        }
+                    }
+                    stage ('Run smoke tests') {
+                        steps {
+                            sh 'docker run --rm --detach --publish 8082:80 --network jenkins --network-alias jenkinstestapp_latest --name "jenkinstestapp_latest" "ghcr.io/bushero/jenkinstestapp:latest"'
+                            sh 'sleep 5'
+                            sh 'curl -Is jenkinstestapp_latest:80 --head' 
+                            sh 'docker stop "jenkinstestapp_latest"'
+                        }
+                    }
+                }
             }
         }
     }
