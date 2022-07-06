@@ -17,8 +17,8 @@ pipeline {
         steps {
             script {
                 sh 'echo $REGISTRY_KEY | docker login ghcr.io -u BusHero --password-stdin'
-                sh 'docker tag jenkinstestapp ghcr.io/bushero/jenkinstestapp'
-                sh 'docker push ghcr.io/bushero/jenkinstestapp'
+                sh 'docker tag jenkinstestapp ghcr.io/bushero/jenkinstestapp:349'
+                sh 'docker push ghcr.io/bushero/jenkinstestapp:349'
             }
         }
     }
