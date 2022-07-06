@@ -26,12 +26,10 @@ pipeline {
                     }
                     stage ('test') {
                         steps {
-                            sh """
-                               docker run --rm --detach --publish 8081:80 --network jenkins --network-alias jenkinstestapp --name "jenkinstestapp_$BUILD_NUMBER" "ghcr.io/bushero/jenkinstestapp:$BUILD_NUMBER"
-                               sleep 5
-                               curl -Is jenkinstestapp:80 --head 
-                               docker stop "jenkinstestapp_$BUILD_NUMBER"
-                               """
+                            sh docker run --rm --detach --publish 8081:80 --network jenkins --network-alias jenkinstestapp --name "jenkinstestapp_$BUILD_NUMBER" "ghcr.io/bushero/jenkinstestapp:$BUILD_NUMBER"
+                            sh sleep 5
+                            sh curl -Is jenkinstestapp:80 --head 
+                            sh docker stop "jenkinstestapp_$BUILD_NUMBER"
                         }
                     }
                 }
