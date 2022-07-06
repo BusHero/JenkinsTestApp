@@ -10,17 +10,25 @@ pipeline {
         sh "docker build --quiet --tag jenkinstestapp ./JenkinsTestApp/"
       }
     }
-    stage ('Push image') {
+    stage ('Push Images') {
         environment {
           REGISTRY_KEY = credentials('GitHub_Registry_Key')
         }
-        steps {
-            sh 'echo $REGISTRY_KEY | docker login ghcr.io -u BusHero --password-stdin'
-            sh 'docker tag jenkinstestapp ghcr.io/bushero/jenkinstestapp:$BUILD_NUMBER'
-            sh 'docker push ghcr.io/bushero/jenkinstestapp:$BUILD_NUMBER'
-     
-            sh 'docker tag jenkinstestapp ghcr.io/bushero/jenkinstestapp:latest'
-            sh 'docker push ghcr.io/bushero/jenkinstestapp:latest'
+        parallel {
+            stage('Push tagged image') {
+                steps {
+                    sh 'echo $REGISTRY_KEY | docker login ghcr.io -u BusHero --password-stdin'
+                    sh 'docker tag jenkinstestapp ghcr.io/bushero/jenkinstestapp:$BUILD_NUMBER'
+                    sh 'docker push ghcr.io/bushero/jenkinstestapp:$BUILD_NUMBER'
+                }
+            }
+            stage('Push latest image') {
+                steps {
+                    sh 'echo $REGISTRY_KEY | docker login ghcr.io -u BusHero --password-stdin'
+                    sh 'docker tag jenkinstestapp ghcr.io/bushero/jenkinstestapp:latest'
+                    sh 'docker push ghcr.io/bushero/jenkinstestapp:latest'
+                }            
+            }
         }
     }
     stage('Check docker image') {
