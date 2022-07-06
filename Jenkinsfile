@@ -15,7 +15,6 @@ pipeline {
           REGISTRY_KEY = credentials('test')
         }
         steps {
-            sh docker 
             script {
                 docker.withRegistry('https://ghcr.io/bushero', 'test') {
                     app.push("${env.BUILD_NUMBER}")
