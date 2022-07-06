@@ -17,16 +17,15 @@ pipeline {
         steps {
             script {
                 sh 'echo $REGISTRY_KEY | docker login ghcr.io -u BusHero --password-stdin'
-                sh 'docker tag jenkinstestapp ghcr.io/bushero/jenkinstestapp:349'
-                sh 'docker push ghcr.io/bushero/jenkinstestapp:349'
+                sh 'docker tag jenkinstestapp ghcr.io/bushero/jenkinstestapp:$BUILD_NUMBER'
+                sh 'docker push ghcr.io/bushero/jenkinstestapp:$BUILD_NUMBER'
             }
         }
     }
     stage('Check docker image') {
         steps {
             sh """
-               docker run --rm --detach --publish 8081:80 --network jenkins --network-alias jenkinstestapp --name "jenkinstestapp$BUILD_NUMBER" "ghcr.io/bushero/jenkinstestapp:349"
-               sleep 5
+               docker run --rm --detach --publish 8081:80 --network jenkins --network-alias jenkinstestapp --name "jenkinstestapp$BUILD_NUMBER" "ghcr.io/bushero/jenkinstestapp:$BUILD_NUMBER"
                curl -Is jenkinstestapp:80 --head 
                docker stop "jenkinstestapp$BUILD_NUMBER"
                """
