@@ -15,14 +15,12 @@ pipeline {
           REGISTRY_KEY = credentials('GitHub_Registry_Key')
         }
         steps {
-            script {
-                sh 'echo $REGISTRY_KEY | docker login ghcr.io -u BusHero --password-stdin'
-                sh 'docker tag jenkinstestapp ghcr.io/bushero/jenkinstestapp:$BUILD_NUMBER'
-                sh 'docker push ghcr.io/bushero/jenkinstestapp:$BUILD_NUMBER'
+            sh 'echo $REGISTRY_KEY | docker login ghcr.io -u BusHero --password-stdin'
+            sh 'docker tag jenkinstestapp ghcr.io/bushero/jenkinstestapp:$BUILD_NUMBER'
+            sh 'docker push ghcr.io/bushero/jenkinstestapp:$BUILD_NUMBER'
      
-                sh 'docker tag jenkinstestapp ghcr.io/bushero/jenkinstestapp:latest'
-                sh 'docker push ghcr.io/bushero/jenkinstestapp:latest'
-            }
+            sh 'docker tag jenkinstestapp ghcr.io/bushero/jenkinstestapp:latest'
+            sh 'docker push ghcr.io/bushero/jenkinstestapp:latest'
         }
     }
     stage('Check docker image') {
