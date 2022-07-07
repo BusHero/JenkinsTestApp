@@ -1,6 +1,7 @@
 param(
 	[string]$jenkinsContainerName,
-	[string]$jenkinsImageName
+	[string]$jenkinsImageName,
+	[int]$sshPort
 )
 
 . "${PSScriptRoot}\common.ps1"
@@ -17,7 +18,7 @@ else {
 		--volume jenkins-data:/var/jenkins_home `
 		--volume jenkins-docker-certs:/certs/client:ro `
 		--publish 8080:8080 `
-		--publish 43833:43833 `
+		--publish "${sshPort}:${sshPort}" `
 		--network jenkins `
 		--network-alias jenkins `
 		--name $jenkinsContainerName `

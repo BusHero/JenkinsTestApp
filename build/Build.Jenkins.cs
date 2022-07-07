@@ -3,6 +3,7 @@ using Nuke.Common.Tools.PowerShell;
 
 using static Nuke.Common.Tools.Docker.DockerTasks;
 using Nuke.Common.Tools.Docker;
+
 using Nuke.Common;
 using Nuke.Common.IO;
 
@@ -12,6 +13,7 @@ partial class Build
 {
     private const string JenkinsImage = "docker-in-docker-jenkins";
     private const string JenkinsContainerName = "jenkins";
+    private const int JenkinsSshPort = 43833;
 
     private readonly AbsolutePath JenkinsScriptsRoot = RootDirectory / "scripts" / "jenkins";
 
@@ -28,6 +30,7 @@ partial class Build
             .SetFile(JenkinsScriptsRoot / "Run-JenkinsContainer.ps1")
             .SetFileKeyValueParameter("jenkinsContainerName", JenkinsContainerName)
             .SetFileKeyValueParameter("jenkinsImageName", JenkinsImage)
+            .SetFileKeyValueParameter("sshPort", JenkinsSshPort.ToString())
             .SetNoProfile(true)
             .SetNoLogo(true)
         ));
@@ -43,6 +46,14 @@ partial class Build
     Target RelaunchJenkins => _ => _
         .DependsOn(StopJenkins, RunJenkins)
         .Executes();
+
+    Target RunJenkinsJob => _ => _
+        .Executes(() => PowerShell(_ => _
+            .SetCommand($"ssh -p {JenkinsSshPort} -l bus1hero localhost build JenkinsTestApp/master -s -v")
+            .SetNoLogo(true)
+            .SetNoProfile(true)
+    ));
+
 }
 
 #pragma warning restore CA1822, IDE0051  // Mark members as static
