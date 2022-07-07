@@ -14,7 +14,10 @@ using static Nuke.Common.Tools.PowerShell.PowerShellTasks;
 using static Nuke.Common.Tools.Docker.DockerTasks;
 using Serilog;
 using Nuke.Common.Tools.PowerShell;
+using System.ComponentModel;
+using static Nuke.Common.Tooling.Enumeration;
 
+#pragma warning disable IDE0051 // Remove unused private members
 class Build : NukeBuild
 {
     /// Support plugins are available for:
@@ -23,12 +26,12 @@ class Build : NukeBuild
     ///   - Microsoft VisualStudio     https://nuke.build/visualstudio
     ///   - Microsoft VSCode           https://nuke.build/vscode
 
-    public static int Main () => Execute<Build>(x => x.Compile);
+    public static int Main() => Execute<Build>(x => x.Compile);
 
     [Parameter("Configuration to build - Default is 'Debug' (local) or 'Release' (server)")]
     readonly Configuration Configuration = IsLocalBuild ? Configuration.Debug : Configuration.Release;
 
-    [Solution(GenerateProjects =true)] readonly Solution Solution;
+    [Solution(GenerateProjects = true)] readonly Solution Solution;
 
     Target Clean => _ => _
         .Before(Restore)
@@ -47,21 +50,39 @@ class Build : NukeBuild
         {
         });
 
-    Target StartDocker => _ => _
-        .Executes(() =>
+    [Parameter] readonly Foo Action = Foo.Start;
+
+    Target Docker => _ => _
+        .Requires(() => Action)
+        .Executes(()=>
         {
+            var script = (string)Action switch
+            {
+                nameof(Foo.Start) => Solution.Directory / "scripts" / "docker" / "start-docker-desktop.ps1",
+                nameof(Foo.Stop) => Solution.Directory / "scripts" / "docker" / "stop-docker-desktop.ps1",
+                _ => throw new Exception()
+            };
+
             PowerShell(_ => _
-                .SetFile(Solution.Directory / "scripts" / "start-docker-desktop.ps1")
+                .SetFile(script)
+                .SetNoLogo(true)
                 .SetNoProfile(true));
         });
+}
+#pragma warning restore IDE0051 // Remove unused private members
 
-    Target StopDocker => _ => _
-        .Executes(() =>
-        {
-            PowerShell(_ => _
-                .SetFile(Solution.Directory / "scripts" / "stop-docker-desktop.ps1")
-                .SetNoProfile(true));
+public enum Bar
+{
+    Start,
+    Stop
+}
 
-        });
 
+[TypeConverter(typeof(TypeConverter<Foo>))]
+public class Foo : Enumeration
+{
+    public static readonly Foo Start = new() { Value = nameof(Start) };
+    public static readonly Foo Stop = new() { Value = nameof(Stop) };
+
+    public static explicit operator string(Foo configuration) => configuration.Value;
 }

@@ -1,7 +1,9 @@
 $DockerDesktop = 'Docker Desktop'
 
 Write-Host 'Check Docker Desktop ... '
-if (Get-Process -Name $DockerDesktop -ErrorAction Ignore) {
+if (Get-Process `
+		-Name $DockerDesktop `
+		-ErrorAction Ignore) {
 	Write-Host "$DockerDesktop is already running"
 }
 else {
