@@ -10,6 +10,10 @@ using Nuke.Common.Utilities.Collections;
 using static Nuke.Common.EnvironmentInfo;
 using static Nuke.Common.IO.FileSystemTasks;
 using static Nuke.Common.IO.PathConstruction;
+using static Nuke.Common.Tools.PowerShell.PowerShellTasks;
+using static Nuke.Common.Tools.Docker.DockerTasks;
+using Serilog;
+using Nuke.Common.Tools.PowerShell;
 
 class Build : NukeBuild
 {
@@ -23,6 +27,8 @@ class Build : NukeBuild
 
     [Parameter("Configuration to build - Default is 'Debug' (local) or 'Release' (server)")]
     readonly Configuration Configuration = IsLocalBuild ? Configuration.Debug : Configuration.Release;
+
+    [Solution(GenerateProjects =true)] readonly Solution Solution;
 
     Target Clean => _ => _
         .Before(Restore)
@@ -39,6 +45,15 @@ class Build : NukeBuild
         .DependsOn(Restore)
         .Executes(() =>
         {
+        });
+
+    Target StartDocker => _ => _
+        .Executes(() =>
+        {
+            PowerShell(_ => _
+                .SetFile(Solution.Directory / "scripts" / "launch-docker.ps1")    
+            .SetCommand("pwd")
+                .SetNoProfile(true));
         });
 
 }
