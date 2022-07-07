@@ -51,8 +51,17 @@ class Build : NukeBuild
         .Executes(() =>
         {
             PowerShell(_ => _
-                .SetFile(Solution.Directory / "scripts" / "launch-docker-desktop.ps1")
+                .SetFile(Solution.Directory / "scripts" / "start-docker-desktop.ps1")
                 .SetNoProfile(true));
+        });
+
+    Target StopDocker => _ => _
+        .Executes(() =>
+        {
+            PowerShell(_ => _
+                .SetFile(Solution.Directory / "scripts" / "stop-docker-desktop.ps1")
+                .SetNoProfile(true));
+
         });
 
 }
