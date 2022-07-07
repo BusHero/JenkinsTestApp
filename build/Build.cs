@@ -51,7 +51,7 @@ class Build : NukeBuild
         .Executes(() =>
         {
             PowerShell(_ => _
-                .SetFile(Solution.Directory / "scripts" / "launch-docker.ps1")    
+                .SetFile(Solution.Directory / "scripts" / "launch-docker-desktop.ps1")    
             .SetCommand("pwd")
                 .SetNoProfile(true));
         });
