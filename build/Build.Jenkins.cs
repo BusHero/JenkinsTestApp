@@ -6,6 +6,7 @@ using Nuke.Common.Tools.Docker;
 
 using Nuke.Common;
 using System.Linq.Expressions;
+using Nuke.Common.IO;
 
 #pragma warning disable CA1822, IDE0051  // Mark members as static
 
@@ -14,37 +15,35 @@ partial class Build
     private const string JenkinsImage = "docker-in-docker-jenkins";
     private const string JenkinsContainerName = "jenkins";
 
+    private readonly AbsolutePath JenkinsScriptsRoot = RootDirectory / "scripts" / "jenkins";
+
     Target BuildJenkins => _ => _
         .DependsOn(StartDockerDesktop)
         .Executes(() => DockerBuild(_ => _
             .SetTag(JenkinsImage)
-            .SetPath(RootDirectory / "scripts" / "jenkins")
+            .SetPath(JenkinsScriptsRoot)
         ));
 
-
-    Target StartJenkins => _ => _
+    Target RunJenkins => _ => _
         .DependsOn(BuildJenkins)
-        .Executes(() => DockerRun(_ => _
-            .SetRm(true)
-            .SetDetach(true)
-            .SetGroupAdd("0")
-            .SetVolume(
-                "//var/run/docker.sock:/var/run/docker.sock",
-                "jenkins-data:/var/jenkins_home",
-                "jenkins-docker-certs:/certs/client:ro")
-            .SetPublish("8080:8080", "43833:43833")
-            .SetNetwork("jenkins")
-            .SetNetworkAlias("jenkins")
-            .SetName(JenkinsContainerName)
-            .SetImage(JenkinsImage)
+        .Executes(() => PowerShell(_ => _
+            .SetFile(JenkinsScriptsRoot / "Run-JenkinsContainer.ps1")
+            .SetFileKeyValueParameter("jenkinsContainerName", JenkinsContainerName)
+            .SetFileKeyValueParameter("jenkinsImageName", JenkinsImage)
+            .SetNoProfile(true)
+            .SetNoLogo(true)
         ));
 
     Target StopJenkins => _ => _
-        .Executes(() => DockerStop(_ => _
-            .SetContainers(JenkinsContainerName)));
+        .Executes(() => PowerShell(_ => _
+            .SetFile(JenkinsScriptsRoot / "Stop-JenkinsContainer.ps1")
+            .SetFileKeyValueParameter("jenkinsContainerName", JenkinsContainerName)
+            .SetNoProfile(true)
+            .SetNoLogo(true)
+        ));
     
     Target RelaunchJenkins => _ => _
-        .DependsOn(StopJenkins, StartJenkins)
+        .DependsOn(StopJenkins, RunJenkins)
         .Executes();
 }
 
