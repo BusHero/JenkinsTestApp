@@ -1,11 +1,9 @@
-﻿using System;
-using static Nuke.Common.Tools.PowerShell.PowerShellTasks;
-using static Nuke.Common.Tools.Docker.DockerTasks;
+﻿using static Nuke.Common.Tools.PowerShell.PowerShellTasks;
 using Nuke.Common.Tools.PowerShell;
-using Nuke.Common.Tools.Docker;
 
+using static Nuke.Common.Tools.Docker.DockerTasks;
+using Nuke.Common.Tools.Docker;
 using Nuke.Common;
-using System.Linq.Expressions;
 using Nuke.Common.IO;
 
 #pragma warning disable CA1822, IDE0051  // Mark members as static

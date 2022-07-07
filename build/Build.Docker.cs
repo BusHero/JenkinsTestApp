@@ -1,21 +1,21 @@
-﻿using static Nuke.Common.Tools.PowerShell.PowerShellTasks;
-using Nuke.Common.Tools.PowerShell;
+﻿using static Nuke.Common.Tools.Docker.DockerTasks;
+using Nuke.Common.Tools.Docker;
 
 using Nuke.Common;
 
 #pragma warning disable CA1822, IDE0051  // Mark members as static
+
 partial class Build
 {
-    Target StartDockerDesktop => _ => _
-        .Executes(() => PowerShell(_ => _
-        .SetFile(RootDirectory / "scripts" / "docker" / "start-docker-desktop.ps1")
-        .SetNoLogo(true)
-        .SetNoProfile(true)));
+    [Parameter, Secret] readonly string DockerRegistryKey;
 
-    Target StopDockerDesktop => _ => _
-        .Executes(() => PowerShell(_ => _
-        .SetFile(RootDirectory / "scripts" / "docker" / "stop-docker-desktop.ps1")
-        .SetNoLogo(true)
-        .SetNoProfile(true)));
+    Target LoginRegistry => _ => _
+        .Requires(() => DockerRegistryKey)
+        .Executes(() => DockerLogin(_ => _
+            .SetServer("ghcr.io")
+            .SetUsername("BusHero")
+            .SetPassword(DockerRegistryKey)
+    ));
 }
+
 #pragma warning restore CA1822, IDE0051  // Mark members as static
