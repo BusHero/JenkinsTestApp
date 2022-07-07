@@ -10,15 +10,14 @@ using Nuke.Common.Utilities.Collections;
 using static Nuke.Common.EnvironmentInfo;
 using static Nuke.Common.IO.FileSystemTasks;
 using static Nuke.Common.IO.PathConstruction;
-using static Nuke.Common.Tools.PowerShell.PowerShellTasks;
 using static Nuke.Common.Tools.Docker.DockerTasks;
 using Serilog;
-using Nuke.Common.Tools.PowerShell;
 using System.ComponentModel;
 using static Nuke.Common.Tooling.Enumeration;
 
+#pragma warning disable CA1822 // Mark members as static
 #pragma warning disable IDE0051 // Remove unused private members
-class Build : NukeBuild
+partial class Build : NukeBuild
 {
     /// Support plugins are available for:
     ///   - JetBrains ReSharper        https://nuke.build/resharper
@@ -50,39 +49,8 @@ class Build : NukeBuild
         {
         });
 
-    [Parameter] readonly Foo Action = Foo.Start;
 
-    Target Docker => _ => _
-        .Requires(() => Action)
-        .Executes(()=>
-        {
-            var script = (string)Action switch
-            {
-                nameof(Foo.Start) => Solution.Directory / "scripts" / "docker" / "start-docker-desktop.ps1",
-                nameof(Foo.Stop) => Solution.Directory / "scripts" / "docker" / "stop-docker-desktop.ps1",
-                _ => throw new Exception()
-            };
-
-            PowerShell(_ => _
-                .SetFile(script)
-                .SetNoLogo(true)
-                .SetNoProfile(true));
-        });
 }
 #pragma warning restore IDE0051 // Remove unused private members
+#pragma warning restore CA1822 // Mark members as static
 
-public enum Bar
-{
-    Start,
-    Stop
-}
-
-
-[TypeConverter(typeof(TypeConverter<Foo>))]
-public class Foo : Enumeration
-{
-    public static readonly Foo Start = new() { Value = nameof(Start) };
-    public static readonly Foo Stop = new() { Value = nameof(Stop) };
-
-    public static explicit operator string(Foo configuration) => configuration.Value;
-}
