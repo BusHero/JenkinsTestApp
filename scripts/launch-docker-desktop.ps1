@@ -7,7 +7,7 @@ if (Get-Process -Name $DockerDesktop -ErrorAction Ignore) {
 else {
 	Write-Host "Start $DockerDesktop ..."
 
-	Start-Process "${env:ProgramFiles}\Docker\$DockerDesktop.exe"
+	Start-Process "${env:ProgramFiles}\Docker\Docker\$DockerDesktop.exe"
 
 	Write-Host 'Done'
 }
