@@ -3,10 +3,10 @@ pipeline {
   stages {
     stage('Commit') {
       steps {
-        sh './build.sh --no-logo --verbosity Quiet compile --configuration Release'
-        sh './build.sh --no-logo --verbosity Quiet test --configuration Release'
-        sh './build.sh --no-logo --verbosity Quiet publish --configuration Release'
-        sh './build.sh --no-logo --verbosity Quiet build-image'
+        sh './build.sh compile --no-logo --verbosity Quiet  --configuration Release'
+        sh './build.sh test --no-logo --verbosity Quiet  --configuration Release'
+        sh './build.sh publish --no-logo --verbosity Quiet  --configuration Release'
+        sh './build.sh build-image --no-logo --verbosity Quiet '
       }
     }
     stage ('Push Images') {
@@ -18,7 +18,7 @@ pipeline {
                 stages {
                     stage('Push') {
                         steps {
-                            sh './build.sh --no-logo --verbosity Quiet login-registry --DockerRegistryKey $REGISTRY_KEY'
+                            sh './build.sh login-registry --no-logo --verbosity Quiet --DockerRegistryKey $REGISTRY_KEY'
                             sh 'docker tag jenkinstestapp ghcr.io/bushero/jenkinstestapp:$BUILD_NUMBER'
                             sh 'docker push ghcr.io/bushero/jenkinstestapp:$BUILD_NUMBER'
                         }
