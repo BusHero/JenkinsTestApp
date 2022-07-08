@@ -19,7 +19,7 @@ pipeline {
                 stages {
                     stage('Push') {
                         steps {
-                            sh './build.sh login-registry --DockerRegistryKey $REGISTRY_KEY'
+                            sh './build.sh --root $WORKSPACE login-registry --DockerRegistryKey $REGISTRY_KEY'
                             sh 'docker tag jenkinstestapp ghcr.io/bushero/jenkinstestapp:$BUILD_NUMBER'
                             sh 'docker push ghcr.io/bushero/jenkinstestapp:$BUILD_NUMBER'
                         }
