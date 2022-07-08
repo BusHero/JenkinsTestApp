@@ -3,10 +3,10 @@ pipeline {
   stages {
     stage('Commit') {
       steps {
-        sh './build.sh --root $WORKSPACE compile --configuration Release'
-        sh './build.sh --root $WORKSPACE test --configuration Release'
-        sh './build.sh --root $WORKSPACE publish --configuration Release'
-        sh './build.sh --root $WORKSPACE build-image'
+        sh './build.sh compile --configuration Release'
+        sh './build.sh test --configuration Release'
+        sh './build.sh publish --configuration Release'
+        sh './build.sh build-image'
       }
     }
     stage ('Push Images') {
@@ -18,7 +18,7 @@ pipeline {
                 stages {
                     stage('Push') {
                         steps {
-                            sh './build.sh --root $WORKSPACE login-registry --DockerRegistryKey $REGISTRY_KEY'
+                            sh './build.sh login-registry --DockerRegistryKey $REGISTRY_KEY'
                             sh 'docker tag jenkinstestapp ghcr.io/bushero/jenkinstestapp:$BUILD_NUMBER'
                             sh 'docker push ghcr.io/bushero/jenkinstestapp:$BUILD_NUMBER'
                         }
