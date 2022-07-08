@@ -45,6 +45,8 @@ partial class Build
         .Executes(() => DockerPush(_ => _
             .SetName(PushableAppImageName)
         ));
+
+
 }
 
 #pragma warning restore CA1822, IDE0051  // Mark members as static

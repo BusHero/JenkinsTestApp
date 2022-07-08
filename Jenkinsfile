@@ -19,8 +19,7 @@ pipeline {
                     stage('Push') {
                         steps {
                             sh './build.sh login-registry --no-logo --verbosity Quiet --DockerRegistryKey $REGISTRY_KEY'
-                            sh 'docker tag jenkinstestapp ghcr.io/bushero/jenkinstestapp:$BUILD_NUMBER'
-                            sh 'docker push ghcr.io/bushero/jenkinstestapp:$BUILD_NUMBER'
+                            sh './build.sh push-image --no-logo --verbosity Quiet --tag $BUILD_NUMBER'
                         }
                     }
                     stage ('Run smoke tests') {
