@@ -18,8 +18,7 @@ pipeline {
                 stages {
                     stage('Push') {
                         steps {
-                            sh './build.sh login-registry --no-logo --verbosity Quiet --DockerRegistryKey $REGISTRY_KEY'
-                            sh './build.sh push-image --no-logo --verbosity Quiet --tag $BUILD_NUMBER'
+                            sh './build.sh push-image --no-logo --verbosity Quiet --tag $BUILD_NUMBER --DockerRegistryKey $REGISTRY_KEY'
                         }
                     }
                     stage ('Run smoke tests') {
