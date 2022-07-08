@@ -3,10 +3,10 @@ pipeline {
   stages {
     stage('Commit') {
       steps {
-        sh './build.sh compile --configuration Release'
-        sh './build.sh test --configuration Release'
-        sh './build.sh publish --configuration Release'
-        sh './build.sh build-image'
+        sh './build.sh --root $WORKSPACE compile --configuration Release'
+        sh './build.sh --root $WORKSPACE test --configuration Release'
+        sh './build.sh --root $WORKSPACE publish --configuration Release'
+        sh './build.sh --root $WORKSPACE build-image'
       }
     }
     stage ('Push Images') {
