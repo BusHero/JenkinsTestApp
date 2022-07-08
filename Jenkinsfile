@@ -3,11 +3,7 @@ pipeline {
   stages {
     stage('Commit') {
       steps {
-        sh 'dotnet restore --verbosity Quiet'
-        sh 'dotnet build --verbosity Quiet --configuration Release --no-restore --nologo'
-        sh 'dotnet test --configuration Release --nologo --no-restore --verbosity Quiet --logger trx'
-        sh 'dotnet publish --configuration Release --nologo --verbosity Quiet --no-restore'
-        sh "docker build --quiet --tag jenkinstestapp ./JenkinsTestApp/"
+        sh './build.sh build-image'
       }
     }
     stage ('Push Images') {
