@@ -1,56 +1,34 @@
-using System;
-using System.Linq;
 using Nuke.Common;
-using Nuke.Common.CI;
-using Nuke.Common.Execution;
-using Nuke.Common.IO;
 using Nuke.Common.ProjectModel;
-using Nuke.Common.Tooling;
-using Nuke.Common.Utilities.Collections;
-using static Nuke.Common.EnvironmentInfo;
-using static Nuke.Common.IO.FileSystemTasks;
-using static Nuke.Common.IO.PathConstruction;
-using static Nuke.Common.Tools.Docker.DockerTasks;
-using Serilog;
-using System.ComponentModel;
-using static Nuke.Common.Tooling.Enumeration;
 
-#pragma warning disable CA1822 // Mark members as static
-#pragma warning disable IDE0051 // Remove unused private members
+#pragma warning disable CA1822, IDE0051 
 partial class Build : NukeBuild
 {
-    /// Support plugins are available for:
-    ///   - JetBrains ReSharper        https://nuke.build/resharper
-    ///   - JetBrains Rider            https://nuke.build/rider
-    ///   - Microsoft VisualStudio     https://nuke.build/visualstudio
-    ///   - Microsoft VSCode           https://nuke.build/vscode
+    public static int Main() => Execute<Build>(x => x.Compile);
 
-    public static int Main() => Execute<Build>(x => x.RunJenkinsJob);
+    [Parameter("Configuration to build - Default is 'Debug' (local) or 'Release' (server)")]
+    readonly Configuration Configuration = IsLocalBuild ? Configuration.Debug : Configuration.Release;
 
-    //[Parameter("Configuration to build - Default is 'Debug' (local) or 'Release' (server)")]
-    //readonly Configuration Configuration = IsLocalBuild ? Configuration.Debug : Configuration.Release;
+    [Solution(GenerateProjects = true)] readonly Solution Solution;
 
-    //[Solution(GenerateProjects = true)] readonly Solution Solution;
+    Target Clean => _ => _
+        .Before(Restore)
+        .Executes(() =>
+        {
+        });
 
-    //Target Clean => _ => _
-    //    .Before(Restore)
-    //    .Executes(() =>
-    //    {
-    //    });
+    Target Restore => _ => _
+        .Executes(() =>
+        {
+        });
 
-    //Target Restore => _ => _
-    //    .Executes(() =>
-    //    {
-    //    });
-
-    //Target Compile => _ => _
-    //    .DependsOn(Restore)
-    //    .Executes(() =>
-    //    {
-    //    });
+    Target Compile => _ => _
+        .DependsOn(Restore)
+        .Executes(() =>
+        {
+        });
 
 
 }
-#pragma warning restore IDE0051 // Remove unused private members
-#pragma warning restore CA1822 // Mark members as static
+#pragma warning restore IDE0051, CA1822 // Remove unused private members
 
