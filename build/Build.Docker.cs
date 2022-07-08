@@ -2,6 +2,7 @@
 using Nuke.Common.Tools.Docker;
 
 using Nuke.Common;
+using Nuke.Common.Tooling;
 
 #pragma warning disable CA1822, IDE0051  // Mark members as static
 
@@ -9,12 +10,14 @@ partial class Build
 {
     [Parameter, Secret] readonly string DockerRegistryKey;
     [Parameter] readonly string Tag = "latest";
+    [Parameter] readonly int? PublishPort;
 
     private const string Server = "ghcr.io";
     private const string UserName = "bushero";
     private const string AppImageName = "jenkinstestapp";
 
     private string PushableAppImageName => $"{Server}/{UserName}/{AppImageName}:{Tag}";
+    private string AppContainerName => $"{AppImageName}_{PublishPort}";
 
     Target LoginRegistry => _ => _
         .Requires(() => DockerRegistryKey)
@@ -24,14 +27,14 @@ partial class Build
             .SetPassword(DockerRegistryKey)
     ));
 
-    Target BuildImage => _ => _
+    Target BuildAppImage => _ => _
         .Executes(() => DockerBuild(_ => _
             .SetQuiet(true)
             .SetTag(AppImageName)
             .SetPath(Solution.JenkinsTestApp.Directory)
         ));
 
-    Target TagImage => _ => _
+    Target TagAppImage => _ => _
         .DependsOn(LoginRegistry)
         .Requires(() => Tag)
         .Executes(() => DockerTag(_ => _
@@ -39,14 +42,25 @@ partial class Build
             .SetTargetImage(PushableAppImageName)
         ));
 
-    Target PushImage => _ => _
-        .DependsOn(TagImage)
+    Target PushAppImage => _ => _
+        .DependsOn(TagAppImage)
         .Requires(() => Tag)
         .Executes(() => DockerPush(_ => _
             .SetName(PushableAppImageName)
-        ));
+    ));
 
-
+    Target RunAppImage => _ => _
+        .Requires(() => PublishPort)
+        .Requires(() => Tag)
+        .Executes(() => DockerRun(_ => _
+            .SetRm(true)
+            .SetDetach(true)
+            .SetPublish($"{PublishPort}:80")
+            .SetNetwork(JenkinsNetworkName)
+            .SetNetworkAlias(AppContainerName)
+            .SetName(AppContainerName)
+            .SetImage(PushableAppImageName)
+    ));
 }
 
 #pragma warning restore CA1822, IDE0051  // Mark members as static

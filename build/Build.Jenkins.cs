@@ -13,6 +13,7 @@ partial class Build
 {
     private const string JenkinsImage = "docker-in-docker-jenkins";
     private const string JenkinsContainerName = "jenkins";
+    private const string JenkinsNetworkName = "jenkins";
     private const int JenkinsSshPort = 43833;
 
     private readonly AbsolutePath JenkinsScriptsRoot = RootDirectory / "scripts" / "jenkins";
@@ -31,6 +32,7 @@ partial class Build
             .SetFileKeyValueParameter("jenkinsContainerName", JenkinsContainerName)
             .SetFileKeyValueParameter("jenkinsImageName", JenkinsImage)
             .SetFileKeyValueParameter("sshPort", JenkinsSshPort.ToString())
+            .SetFileKeyValueParameter("jenkinsNetwork", JenkinsNetworkName)
             .SetNoProfile(true)
             .SetNoLogo(true)
         ));

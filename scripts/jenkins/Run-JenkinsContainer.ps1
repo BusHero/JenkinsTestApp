@@ -1,6 +1,7 @@
 param(
 	[string]$jenkinsContainerName,
 	[string]$jenkinsImageName,
+	[string]$jenkinsNetwork,
 	[int]$sshPort
 )
 
@@ -19,7 +20,7 @@ else {
 		--volume jenkins-docker-certs:/certs/client:ro `
 		--publish 8080:8080 `
 		--publish "${sshPort}:${sshPort}" `
-		--network jenkins `
+		--network $jenkinsNetwork `
 		--network-alias jenkins `
 		--name $jenkinsContainerName `
 		$jenkinsImageName
