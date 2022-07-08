@@ -77,9 +77,4 @@ pipeline {
     DOTNET_CLI_HOME = '/tmp'
     DOTNET_CLI_TELEMETRY_OPTOUT = true
   }
-  post {
-    always {
-        mstest testResultsFile:"**/*.trx", keepLongStdio: true
-    }
-  }
 }
