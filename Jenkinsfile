@@ -3,6 +3,9 @@ pipeline {
   stages {
     stage('Commit') {
       steps {
+        sh './build.sh compile --configuration Release'
+        sh './build.sh test --configuration Release'
+        sh './build.sh publish --configuration Release'
         sh './build.sh build-image'
       }
     }

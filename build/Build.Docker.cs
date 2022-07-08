@@ -25,7 +25,6 @@ partial class Build
     ));
 
     Target BuildImage => _ => _
-        .DependsOn(Publish)
         .Executes(() => DockerBuild(_ => _
             .SetQuiet(true)
             .SetTag(AppImageName)

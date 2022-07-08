@@ -46,6 +46,8 @@ partial class Build : NukeBuild
         .Executes(() => DotNetPublish(_ => _
             .SetConfiguration(Configuration)
             .SetNoLogo(true)
+            .SetNoBuild(true)
+            .SetNoRestore(true)
             .SetVerbosity(DotNetVerbosity.Quiet)
             .SetProject(Solution.JenkinsTestApp)
             .SetOutput(PublishDirectory)
@@ -55,6 +57,8 @@ partial class Build : NukeBuild
         .Description("Test the project")
         .Executes(() => DotNetTest(_ => _
             .SetConfiguration(Configuration)
+            .SetNoRestore(true)
+            .SetNoBuild(true)
             .SetVerbosity(DotNetVerbosity.Quiet)
             .SetLoggers("trx")
         ));
