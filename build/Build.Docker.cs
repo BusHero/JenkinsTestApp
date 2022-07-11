@@ -66,17 +66,20 @@ partial class Build
     [LocalExecutable("/bin/sh")]
     readonly Tool Sh;
 
-    private readonly AbsolutePath StopDockerContainerScript = RootDirectory / "scripts" / "jenkins" / "stop-docker-container.sh";
-    private readonly AbsolutePath RunSmokeTestScript = RootDirectory / "scripts" / "jenkins" / "run-smoketest.sh";
+    //private readonly AbsolutePath StopDockerContainerScript = RootDirectory / "scripts" / "jenkins" / "stop-docker-container.sh";
+    //private readonly AbsolutePath RunSmokeTestScript = RootDirectory / "scripts" / "jenkins" / "run-smoketest.sh";
 
     Target RunSmokeTest => _ => _
         .Requires(() => Tag)
-        .Executes(() => Sh($"{RunSmokeTestScript} {AppContainerName}:80"))
-    ;
+        .Executes(() => Sh(
+            arguments: $"run-smoketest.sh {AppContainerName}:80",
+            workingDirectory: JenkinsScriptsRoot));
 
     Target StopAppContainer => _ => _
         .Requires(() => Tag)
-        .Executes(() => Sh($"{StopDockerContainerScript} {AppContainerName}"));
+        .Executes(() => Sh(
+            arguments: $"stop-docker-container.sh {AppContainerName}",
+            workingDirectory: JenkinsScriptsRoot));
 
 }
 
