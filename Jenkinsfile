@@ -29,7 +29,7 @@ pipeline {
                         }
                         post {
                             always {
-                                sh './scripts/jenkins/stop-docker-container.sh "jenkinstestapp_$BUILD_NUMBER$"'
+                                sh 'sh ./scripts/jenkins/stop-docker-container.sh "jenkinstestapp_$BUILD_NUMBER$"'
                                 // sh '''
                                 //     if docker ps --format "{{.Names}}" | grep -q "jenkinstestapp_$BUILD_NUMBER$"
                                 //     then
