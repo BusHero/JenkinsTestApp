@@ -18,7 +18,7 @@ partial class Build
     private const string AppImageName = "jenkinstestapp";
 
     private string PushableAppImageName => $"{Server}/{UserName}/{AppImageName}:{Tag}";
-    private string AppContainerName => $"{AppImageName}_{PublishPort}";
+    private string AppContainerName => $"{AppImageName}_{Tag}";
 
     Target LoginRegistry => _ => _
         .Requires(() => DockerRegistryKey)
