@@ -6,7 +6,7 @@ pipeline {
         sh './build.sh compile --no-logo --verbosity Quiet  --configuration Release'
         sh './build.sh test --no-logo --verbosity Quiet  --configuration Release'
         sh './build.sh publish --no-logo --verbosity Quiet  --configuration Release'
-        sh './build.sh build-image --no-logo --verbosity Quiet '
+        sh './build.sh build-app-image --no-logo --verbosity Quiet '
       }
     }
     stage ('Push Images') {

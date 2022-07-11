@@ -66,6 +66,9 @@
             "type": "string"
           }
         },
+        "PublishPort": {
+          "type": "integer"
+        },
         "Root": {
           "type": "string",
           "description": "Root directory during build execution"
@@ -76,21 +79,22 @@
           "items": {
             "type": "string",
             "enum": [
-              "BuildImage",
+              "BuildAppImage",
               "BuildJenkins",
               "Clean",
               "Compile",
               "LoginRegistry",
               "Publish",
-              "PushImage",
+              "PushAppImage",
               "RelaunchJenkins",
               "Restore",
+              "RunAppImage",
               "RunJenkins",
               "RunJenkinsJob",
               "StartDockerDesktop",
               "StopDockerDesktop",
               "StopJenkins",
-              "TagImage",
+              "TagAppImage",
               "Test"
             ]
           }
@@ -108,21 +112,22 @@
           "items": {
             "type": "string",
             "enum": [
-              "BuildImage",
+              "BuildAppImage",
               "BuildJenkins",
               "Clean",
               "Compile",
               "LoginRegistry",
               "Publish",
-              "PushImage",
+              "PushAppImage",
               "RelaunchJenkins",
               "Restore",
+              "RunAppImage",
               "RunJenkins",
               "RunJenkinsJob",
               "StartDockerDesktop",
               "StopDockerDesktop",
               "StopJenkins",
-              "TagImage",
+              "TagAppImage",
               "Test"
             ]
           }
