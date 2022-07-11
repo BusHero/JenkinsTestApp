@@ -74,7 +74,7 @@ partial class Build
         .Executes(() => Bash($"{RunSmokeTestScript} {AppContainerName}:80"))
     ;
 
-    Target StopDockerContainer => _ => _
+    Target StopAppContainer => _ => _
         .Requires(() => Tag)
         .Executes(() => Bash($"{StopDockerContainerScript} {AppContainerName}"));
 

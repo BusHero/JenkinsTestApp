@@ -91,12 +91,13 @@
               "RunAppImage",
               "RunJenkins",
               "RunJenkinsJob",
+              "RunSmokeTest",
               "StartDockerDesktop",
+              "StopDockerContainer",
               "StopDockerDesktop",
               "StopJenkins",
               "TagAppImage",
-              "Test",
-              "TestBash"
+              "Test"
             ]
           }
         },
@@ -125,12 +126,13 @@
               "RunAppImage",
               "RunJenkins",
               "RunJenkinsJob",
+              "RunSmokeTest",
               "StartDockerDesktop",
+              "StopDockerContainer",
               "StopDockerDesktop",
               "StopJenkins",
               "TagAppImage",
-              "Test",
-              "TestBash"
+              "Test"
             ]
           }
         },
