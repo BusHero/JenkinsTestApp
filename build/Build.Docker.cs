@@ -66,9 +66,6 @@ partial class Build
     [LocalExecutable("/bin/sh")]
     readonly Tool Sh;
 
-    //private readonly AbsolutePath StopDockerContainerScript = RootDirectory / "scripts" / "jenkins" / "stop-docker-container.sh";
-    //private readonly AbsolutePath RunSmokeTestScript = RootDirectory / "scripts" / "jenkins" / "run-smoketest.sh";
-
     Target RunSmokeTest => _ => _
         .Requires(() => Tag)
         .Executes(() => Sh(
