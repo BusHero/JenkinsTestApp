@@ -38,20 +38,17 @@ pipeline {
                 stages {
                     stage('Push latest image') {
                         steps {
-                            sh 'echo $REGISTRY_KEY | docker login ghcr.io -u BusHero --password-stdin'
-                            sh 'docker tag jenkinstestapp ghcr.io/bushero/jenkinstestapp:latest'
-                            sh 'docker push ghcr.io/bushero/jenkinstestapp:latest'
+                            sh './build.sh push-app-image --no-logo --verbosity Quiet --tag latest --DockerRegistryKey $REGISTRY_KEY'
                         }
                     }
                     stage ('Run smoke tests latest image') {
                         steps {
-                            sh 'docker run --rm --detach --publish 8082:80 --network jenkins --network-alias jenkinstestapp_latest --name "jenkinstestapp_latest" "ghcr.io/bushero/jenkinstestapp:latest"'
-                            sh 'sleep 5'
-                            sh 'curl -Is jenkinstestapp_latest:80 --head' 
+                            sh './build.sh run-app-image --no-logo --verbosity Quiet --PublishPort 8082 --Tag latest'
+                            sh './build.sh run-smoke-test --no-logo --verbosity Quiet --Tag latest'
                         }
                         post {
                             always {
-                                sh './scripts/jenkins/stop-docker-container.sh "jenkinstestapp_latest"'
+                                sh './build.sh stop-app-container --no-logo --verbosity Quiet --tag latest'
                             }
                         }
                     }
