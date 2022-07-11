@@ -6,6 +6,7 @@ using Nuke.Common.Tools.Docker;
 
 using Nuke.Common;
 using Nuke.Common.IO;
+using Nuke.Common.Tooling;
 
 #pragma warning disable CA1822, IDE0051  // Mark members as static
 
@@ -55,7 +56,6 @@ partial class Build
             .SetNoLogo(true)
             .SetNoProfile(true)
     ));
-
 }
 
 #pragma warning restore CA1822, IDE0051  // Mark members as static

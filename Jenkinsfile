@@ -23,13 +23,12 @@ pipeline {
                     }
                     stage ('Run smoke tests') {
                         steps {
-                            sh 'docker run --rm --detach --publish 8081:80 --network jenkins --network-alias jenkinstestapp --name "jenkinstestapp_$BUILD_NUMBER" "ghcr.io/bushero/jenkinstestapp:$BUILD_NUMBER"'
-                            sh 'sleep 5'
-                            sh 'curl -Is jenkinstestapp:80 --head' 
+                            sh './build.sh run-app-image --no-logo --verbosity Quiet --PublishPort 8081 --Tag $BUILD_NUMBER'
+                            sh './build.sh run-smoke-test --no-logo --verbosity Quiet --Tag $BUILD_NUMBER'
                         }
                         post {
                             always {
-                                sh 'sh ./scripts/jenkins/stop-docker-container.sh "jenkinstestapp_$BUILD_NUMBER"'
+                                sh './build.sh stop-app-container --no-logo --verbosity Quiet --tag $BUILD_NUMBER'
                             }
                         }
                     }

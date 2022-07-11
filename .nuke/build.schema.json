@@ -95,7 +95,8 @@
               "StopDockerDesktop",
               "StopJenkins",
               "TagAppImage",
-              "Test"
+              "Test",
+              "TestBash"
             ]
           }
         },
@@ -128,7 +129,8 @@
               "StopDockerDesktop",
               "StopJenkins",
               "TagAppImage",
-              "Test"
+              "Test",
+              "TestBash"
             ]
           }
         },

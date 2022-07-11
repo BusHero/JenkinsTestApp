@@ -3,6 +3,7 @@ using Nuke.Common.ProjectModel;
 using static Nuke.Common.Tools.DotNet.DotNetTasks;
 using Nuke.Common.Tools.DotNet;
 using Nuke.Common.IO;
+using Nuke.Common.Tooling;
 
 
 #pragma warning disable CA1822, IDE0051
@@ -62,7 +63,6 @@ partial class Build : NukeBuild
             .SetVerbosity(DotNetVerbosity.Quiet)
             .SetLoggers("trx")
         ));
-
 }
 #pragma warning restore IDE0051, CA1822 // Remove unused private members
 

@@ -3,6 +3,7 @@ using Nuke.Common.Tools.Docker;
 
 using Nuke.Common;
 using Nuke.Common.Tooling;
+using Nuke.Common.IO;
 
 #pragma warning disable CA1822, IDE0051  // Mark members as static
 
@@ -61,6 +62,22 @@ partial class Build
             .SetName(AppContainerName)
             .SetImage(PushableAppImageName)
     ));
+
+    [PathExecutable]
+    readonly Tool Bash;
+
+    private readonly AbsolutePath StopDockerContainerScript = RootDirectory / "scripts" / "jenkins" / "stop-docker-container.sh";
+    private readonly AbsolutePath RunSmokeTestScript = RootDirectory / "scripts" / "jenkins" / "run-smoketest.sh";
+
+    Target RunSmokeTest => _ => _
+        .Requires(() => Tag)
+        .Executes(() => Bash($"{RunSmokeTestScript} {AppContainerName}:80"))
+    ;
+
+    Target StopDockerContainer => _ => _
+        .Requires(() => Tag)
+        .Executes(() => Bash($"{StopDockerContainerScript} {AppContainerName}"));
+
 }
 
 #pragma warning restore CA1822, IDE0051  // Mark members as static
