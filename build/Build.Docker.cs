@@ -63,7 +63,7 @@ partial class Build
             .SetImage(PushableAppImageName)
     ));
 
-    [PathExecutable]
+    [LocalExecutable("/bin/sh")]
     readonly Tool Sh;
 
     private readonly AbsolutePath StopDockerContainerScript = RootDirectory / "scripts" / "jenkins" / "stop-docker-container.sh";

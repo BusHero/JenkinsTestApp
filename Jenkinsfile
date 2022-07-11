@@ -16,12 +16,12 @@ pipeline {
         parallel {
             stage('Push tagged image') {
                 stages {
-                    stage('Push') {
+                    stage('Push tagged image') {
                         steps {
                             sh './build.sh push-app-image --no-logo --verbosity Quiet --tag $BUILD_NUMBER --DockerRegistryKey $REGISTRY_KEY'
                         }
                     }
-                    stage ('Run smoke tests') {
+                    stage ('Run smoke tests tagged image') {
                         steps {
                             sh './build.sh run-app-image --no-logo --verbosity Quiet --PublishPort 8081 --Tag $BUILD_NUMBER'
                             sh './build.sh run-smoke-test --no-logo --verbosity Quiet --Tag $BUILD_NUMBER'
@@ -36,14 +36,14 @@ pipeline {
             }
             stage('Push latest image') {
                 stages {
-                    stage('Push') {
+                    stage('Push latest image') {
                         steps {
                             sh 'echo $REGISTRY_KEY | docker login ghcr.io -u BusHero --password-stdin'
                             sh 'docker tag jenkinstestapp ghcr.io/bushero/jenkinstestapp:latest'
                             sh 'docker push ghcr.io/bushero/jenkinstestapp:latest'
                         }
                     }
-                    stage ('Run smoke tests') {
+                    stage ('Run smoke tests latest image') {
                         steps {
                             sh 'docker run --rm --detach --publish 8082:80 --network jenkins --network-alias jenkinstestapp_latest --name "jenkinstestapp_latest" "ghcr.io/bushero/jenkinstestapp:latest"'
                             sh 'sleep 5'
