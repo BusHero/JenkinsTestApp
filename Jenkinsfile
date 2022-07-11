@@ -29,12 +29,13 @@ pipeline {
                         }
                         post {
                             always {
-                                sh '''
-                                    if docker ps --format "{{.Names}}" | grep -q "jenkinstestapp_$BUILD_NUMBER$"
-                                    then
-                                        docker stop "jenkinstestapp_$BUILD_NUMBER"
-                                    fi
-                                '''
+                                sh './scripts/jenkins/stop-docker-container.sh "jenkinstestapp_$BUILD_NUMBER$"'
+                                // sh '''
+                                //     if docker ps --format "{{.Names}}" | grep -q "jenkinstestapp_$BUILD_NUMBER$"
+                                //     then
+                                //         docker stop "jenkinstestapp_$BUILD_NUMBER"
+                                //     fi
+                                // '''
                             }
                         }
                     }
