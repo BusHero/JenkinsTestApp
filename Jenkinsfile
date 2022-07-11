@@ -30,12 +30,6 @@ pipeline {
                         post {
                             always {
                                 sh 'sh ./scripts/jenkins/stop-docker-container.sh "jenkinstestapp_$BUILD_NUMBER"'
-                                // sh '''
-                                //     if docker ps --format "{{.Names}}" | grep -q "jenkinstestapp_$BUILD_NUMBER$"
-                                //     then
-                                //         docker stop "jenkinstestapp_$BUILD_NUMBER"
-                                //     fi
-                                // '''
                             }
                         }
                     }
@@ -58,12 +52,7 @@ pipeline {
                         }
                         post {
                             always {
-                                sh '''
-                                    if docker ps --format "{{.Names}}" | grep -q "jenkinstestapp_latest$"
-                                    then
-                                        docker stop jenkinstestapp_latest
-                                    fi
-                                '''
+                                sh './scripts/jenkins/stop-docker-container.sh "jenkinstestapp_latest"'
                             }
                         }
                     }
